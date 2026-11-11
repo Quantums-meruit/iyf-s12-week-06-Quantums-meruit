@@ -1,0 +1,27 @@
+/* Shared styling for the Week 6 lesson and challenge pages. */
+:root { color-scheme: light; --ink:#1f2937; --muted:#64748b; --line:#dbe3ee; --blue:#2457c5; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:system-ui,-apple-system,"Segoe UI",sans-serif; line-height:1.6; color:var(--ink); background:#f3f6fb; }
+.page-shell { width:min(100% - 2rem, 1000px); margin:2rem auto 4rem; }
+.top-nav { display:flex; flex-wrap:wrap; gap:1rem; margin-bottom:2rem; }
+a { color:var(--blue); }
+.page-header { margin-bottom:1.5rem; }
+.eyebrow { color:var(--blue); font-weight:700; letter-spacing:.12em; font-size:.78rem; }
+h1 { font-size:clamp(2rem,5vw,3.3rem); line-height:1.1; margin:.3rem 0 .8rem; }
+h2 { margin-top:0; }
+.panel,.revision-note { background:white; border:1px solid var(--line); border-radius:16px; padding:1.25rem; margin:1rem 0; box-shadow:0 5px 20px #15294b0a; }
+button { border:0; border-radius:9px; background:var(--blue); color:white; font:inherit; padding:.65rem 1rem; margin:.25rem .35rem .25rem 0; cursor:pointer; }
+button:hover { filter:brightness(.92); }
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible { outline:3px solid #93b4ff; outline-offset:2px; }
+.output { white-space:pre-wrap; overflow-wrap:anywhere; background:#101827; color:#e5edf8; padding:1rem; border-radius:10px; min-height:3.5rem; }
+.revision-note { border-left:5px solid #e0a52b; }
+.toolbar { display:flex; flex-wrap:wrap; gap:1rem; margin:1rem 0; }
+.toolbar label,.stack label { display:grid; gap:.3rem; flex:1; min-width:180px; font-weight:600; }
+input,select,textarea { width:100%; border:1px solid var(--line); border-radius:8px; padding:.65rem; font:inherit; background:white; }
+.stack { display:grid; gap:.8rem; max-width:650px; }
+.user-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:.8rem; }
+.user-card { border:1px solid var(--line); border-radius:10px; padding:1rem; background:#fbfdff; }
+.user-card h3 { margin-top:0; }
+.error { color:#b42318; }
+[hidden] { display:none !important; }
+@media (max-width:600px) { .page-shell { width:min(100% - 1rem,1000px); margin:1rem auto 2rem; } .panel,.revision-note { padding:1rem; } }
