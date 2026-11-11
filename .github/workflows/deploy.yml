@@ -1,3 +1,4 @@
+
 name: Deploy to GitHub Pages
 
 on:
@@ -20,10 +21,11 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - uses: actions/checkout@v4
 
-      - name: Create config.js from the repository secret
+      - name: Create config.js from repository secret
         env:
           OPENWEATHER_API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
         run: |
@@ -31,11 +33,20 @@ jobs:
             echo "OPENWEATHER_API_KEY repository secret is missing."
             exit 1
           fi
+
           node -e 'require("fs").writeFileSync("config.js", "const API_KEY = " + JSON.stringify(process.env.OPENWEATHER_API_KEY) + ";")'
 
+      - name: Verify deployment files
+        run: |
+          test -s config.js || (echo "config.js is missing!" && exit 1)
+          test -s index.html || (echo "index.html is missing!" && exit 1)
+          echo "Required deployment files are present."
+
       - uses: actions/configure-pages@v5
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .
+
       - id: deployment
         uses: actions/deploy-pages@v4
