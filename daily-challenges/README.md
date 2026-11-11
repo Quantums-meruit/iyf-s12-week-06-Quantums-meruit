@@ -1,6 +1,6 @@
 # Daily Challenges
 
-The five required asynchronous JavaScript challenges are runnable from the [Daily Challenges page](../daily-challenges.html).
+The five required asynchronous JavaScript challenges are runnable from the [Daily Challenges page](index.html).
 
 1. **Day 1 — Delayed Promise:** resolve a Promise after a two-second delay.
 2. **Day 2 — Promise chain:** run three asynchronous tasks in sequence and measure elapsed time.
