@@ -16,7 +16,7 @@ This is my Week 6 work for IYF Weekend Academy Season 12. I used the exercises t
 | `config.example.js` | Safe example configuration with an empty API-key value |
 | `async-practice.js`, `lesson-11.html` | Lesson 11: callbacks, Promises, Promise chaining, Promise.all, Promise.race and async/await |
 | `lesson-12.html`, `lesson-12.js`, `practice.css` | Lesson 12: Fetch API, user directory, search, sorting, filtering and POST requests |
-| `daily-challenges.html`, `daily-challenges.js` | Five interactive asynchronous JavaScript daily challenges |
+| `daily-challenges/index.html`, `daily-challenges/daily-challenges.js` | Five interactive asynchronous JavaScript daily challenges |
 | `daily-challenges/` | Overview of the five required daily challenges |
 | `.github/workflows/deploy.yml` | GitHub Actions workflow for deploying to GitHub Pages |
 
@@ -82,7 +82,7 @@ I practised fetching a single user and related posts, rendering a user directory
 
 4. Start the folder with a local development server, such as VS Code Live Server, and open `index.html`.
 
-5. The practice pages can be opened directly: `lesson-11.html`, `lesson-12.html` and `daily-challenges.html`. They do not require the weather API key.
+5. The practice pages can be opened directly: `lesson-11.html`, `lesson-12.html` and `daily-challenges/index.html`. They do not require the weather API key.
 
 ## What I learned
 
