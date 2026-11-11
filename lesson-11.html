@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 11 | Asynchronous JavaScript</title>
+    <link rel="stylesheet" href="practice.css">
+    <script src="lesson-11.js" defer></script>
+</head>
+<body>
+    <main class="page-shell">
+        <nav class="top-nav"><a href="index.html">Weather Dashboard</a><a href="lesson-12.html">Lesson 12</a><a href="daily-challenges.html">Daily Challenges</a></nav>
+        <header class="page-header">
+            <p class="eyebrow">WEEK 06 · LESSON 11</p>
+            <h1>Callbacks, Promises &amp; Async/Await</h1>
+            <p>Small runnable examples for understanding how JavaScript handles work that finishes later.</p>
+        </header>
+
+        <section class="panel">
+            <h2>11.1 · Synchronous vs asynchronous</h2>
+            <p>Predict the output before running the example. Remember: a zero-millisecond timeout still waits until the current call stack is clear.</p>
+            <button id="run-order">Run output-order example</button>
+            <pre class="output" id="order-output" aria-live="polite">The output will appear here.</pre>
+            <h3>Callback pattern</h3>
+            <p><code>loadUser</code> simulates a database lookup and sends the result to a callback.</p>
+            <button id="run-callback">Load user with callback</button>
+            <pre class="output" id="callback-output" aria-live="polite">The user will appear here.</pre>
+        </section>
+
+        <section class="panel">
+            <h2>11.2 · Callback hell and Promises</h2>
+            <p>The first button runs nested callbacks. The second uses Promises for the same sequence.</p>
+            <button id="run-callback-hell">Run nested callbacks</button>
+            <button id="run-promise-sequence">Run Promise sequence</button>
+            <pre class="output" id="promise-output" aria-live="polite">Sequence results will appear here.</pre>
+        </section>
+
+        <section class="panel">
+            <h2>11.3 · Promise chaining, all and race</h2>
+            <button id="run-promise-all">Load 3 users with Promise.all</button>
+            <button id="run-promise-race">Run Promise.race example</button>
+            <pre class="output" id="parallel-output" aria-live="polite">Promise results will appear here.</pre>
+        </section>
+
+        <section class="panel">
+            <h2>11.4 · Async/await and error handling</h2>
+            <button id="run-async-sequence">Rewrite callback sequence with async/await</button>
+            <button id="run-error">Try an invalid user ID</button>
+            <pre class="output" id="async-output" aria-live="polite">Async/await results will appear here.</pre>
+        </section>
+
+        <aside class="revision-note">
+            <h2>Revision notes</h2>
+            <ul>
+                <li><strong>Callback:</strong> a function passed to another function to run later.</li>
+                <li><strong>Promise:</strong> an object representing a future result; it can be pending, fulfilled or rejected.</li>
+                <li><strong>.then():</strong> handles a fulfilled Promise and can return a value or another Promise.</li>
+                <li><strong>Promise.all():</strong> waits for every Promise; it rejects if any input Promise rejects.</li>
+                <li><strong>Promise.race():</strong> settles with the first input Promise to settle.</li>
+                <li><strong>async/await:</strong> syntax that makes Promise-based code read in a sequential style.</li>
+                <li><strong>try/catch/finally:</strong> handles errors and runs cleanup code whether the operation succeeds or fails.</li>
+            </ul>
+            <p><strong>NB:</strong> <code>await</code> pauses the current async function, not the whole browser. Use <code>Promise.all()</code> when independent requests can run in parallel.</p>
+        </aside>
+    </main>
+</body>
+</html>
