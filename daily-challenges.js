@@ -15,8 +15,10 @@ function randomTask(label) {
 document.getElementById("day-2").addEventListener("click", async () => {
     const output = document.getElementById("out-2");
     const start = performance.now();
-    const results = await randomTask("Task 1").then(() => randomTask("Task 2")).then(() => randomTask("Task 3"));
-    output.textContent = `${results}\nTotal time: ${Math.round(performance.now() - start)}ms`;
+    const first = await randomTask("Task 1");
+    const second = await randomTask("Task 2");
+    const third = await randomTask("Task 3");
+    output.textContent = [first, second, third, `Total time: ${Math.round(performance.now() - start)}ms`].join("\n");
 });
 
 document.getElementById("day-3").addEventListener("click", async () => {
@@ -24,12 +26,14 @@ document.getElementById("day-3").addEventListener("click", async () => {
     output.textContent = "Fetching user 9999...";
     try {
         const response = await fetch("https://jsonplaceholder.typicode.com/users/9999");
-        if (response.status === 404) {
+        // A 404 means the requested user does not exist, so return a safe fallback.
+        if (response.status === 404 || response.status === 200 && response.headers.get("content-length") === "0") {
             output.textContent = JSON.stringify({ id: 0, name: "Guest User", email: "guest@example.com" }, null, 2);
             return;
         }
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        output.textContent = JSON.stringify(await response.json(), null, 2);
+        const user = await response.json();
+        output.textContent = JSON.stringify(Object.keys(user).length ? user : { id: 0, name: "Guest User", email: "guest@example.com" }, null, 2);
     } catch (error) { output.textContent = error.message; }
 });
 
@@ -52,14 +56,21 @@ document.getElementById("day-5").addEventListener("click", async () => {
         "https://jsonplaceholder.typicode.com/posts/1",
         "https://jsonplaceholder.typicode.com/comments/1"
     ];
-    const requests = endpoints.map(async url => {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(`${url} returned HTTP ${response.status}`);
-        return response.json();
+    // Update the page as each individual request settles, then also collect
+    // the complete set of outcomes with Promise.allSettled().
+    const requests = endpoints.map(async (url, index) => {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const data = await response.json();
+            output.textContent += `\n\nEndpoint ${index + 1} completed: ${JSON.stringify(data)}`;
+            return data;
+        } catch (error) {
+            output.textContent += `\n\nEndpoint ${index + 1} failed: ${error.message}`;
+            throw error;
+        }
     });
     const results = await Promise.allSettled(requests);
-    // Render each settled result in order, including any individual failure.
-    output.textContent = results.map((result, index) => result.status === "fulfilled"
-        ? `Endpoint ${index + 1}: ${JSON.stringify(result.value)}`
-        : `Endpoint ${index + 1} failed: ${result.reason.message}`).join("\n\n");
+    const successCount = results.filter(result => result.status === "fulfilled").length;
+    output.textContent += `\n\nAll requests settled. Successful: ${successCount}/${results.length}.`;
 });
