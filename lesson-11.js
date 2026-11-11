@@ -1,12 +1,24 @@
 // LESSON 11 — CALLBACKS, PROMISES AND ASYNC/AWAIT
-// These examples use timers so you can observe asynchronous behavior without a server.
+// The timers imitate slow database or network work so the order is observable.
 
-const pause = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 function loadUser(userId, callback) {
     setTimeout(() => callback({ id: userId, name: `User ${userId}` }), 1500);
 }
 
+// Callback versions are kept separate so you can see the nested "pyramid".
+function getUserDataCallback(userId, callback) {
+    setTimeout(() => callback({ id: userId, name: `User ${userId}` }), 350);
+}
+function getUserPostsCallback(userId, callback) {
+    setTimeout(() => callback([{ id: userId * 10 + 1, title: "Learning JavaScript" }]), 350);
+}
+function getPostCommentsCallback(postId, callback) {
+    setTimeout(() => callback([{ id: 1, text: `A comment on post ${postId}` }]), 350);
+}
+
+// Promise versions reject invalid user IDs, which gives try/catch something to handle.
 function getUserData(userId) {
     return new Promise((resolve, reject) => {
         setTimeout(() => userId > 0
@@ -14,14 +26,12 @@ function getUserData(userId) {
             : reject(new Error("Invalid user ID")), 500);
     });
 }
-
 function getUserPosts(userId) {
     return new Promise(resolve => setTimeout(() => resolve([
         { id: userId * 10 + 1, title: "Learning JavaScript" },
         { id: userId * 10 + 2, title: "Working with APIs" }
     ]), 500));
 }
-
 function getPostComments(postId) {
     return new Promise(resolve => setTimeout(() => resolve([
         { id: 1, text: `A useful comment on post ${postId}` },
@@ -35,8 +45,7 @@ function print(id, value) {
 }
 
 document.getElementById("run-order").addEventListener("click", () => {
-    const lines = [];
-    lines.push("A");
+    const lines = ["A"];
     setTimeout(() => { lines.push("B"); print("order-output", lines.join("\n")); }, 0);
     lines.push("C");
     setTimeout(() => { lines.push("D"); print("order-output", lines.join("\n")); }, 100);
@@ -50,19 +59,21 @@ document.getElementById("run-callback").addEventListener("click", () => {
 });
 
 document.getElementById("run-callback-hell").addEventListener("click", () => {
-    print("promise-output", "Running nested callbacks...");
-    getUserData(1).then(user => {
-        print("promise-output", `User: ${JSON.stringify(user)}\nLoading posts...`);
-        return getUserPosts(user.id).then(posts => {
-            print("promise-output", `User: ${JSON.stringify(user)}\nPosts: ${JSON.stringify(posts)}\nLoading comments...`);
-            return getPostComments(posts[0].id);
+    print("promise-output", "Nested callbacks are running...");
+    getUserDataCallback(1, user => {
+        const lines = [`User: ${JSON.stringify(user)}`];
+        getUserPostsCallback(user.id, posts => {
+            lines.push(`Posts: ${JSON.stringify(posts)}`);
+            getPostCommentsCallback(posts[0].id, comments => {
+                lines.push(`Comments: ${JSON.stringify(comments)}`);
+                print("promise-output", lines.join("\n\n"));
+            });
         });
-    }).then(comments => print("promise-output", `Comments: ${JSON.stringify(comments, null, 2)}`))
-      .catch(error => print("promise-output", error.message));
+    });
 });
 
 document.getElementById("run-promise-sequence").addEventListener("click", () => {
-    print("promise-output", "Loading user, posts and comments...");
+    print("promise-output", "Loading user, posts and comments with a Promise chain...");
     getUserData(1)
         .then(user => getUserPosts(user.id))
         .then(posts => getPostComments(posts[0].id))
