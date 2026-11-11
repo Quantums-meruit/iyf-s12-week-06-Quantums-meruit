@@ -22,10 +22,17 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      - name: Write config.js from the repository secret
+
+      - name: Create config.js from the repository secret
         env:
           OPENWEATHER_API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
-        run: echo "const API_KEY = \"$OPENWEATHER_API_KEY\";" > config.js
+        run: |
+          if [ -z "$OPENWEATHER_API_KEY" ]; then
+            echo "OPENWEATHER_API_KEY repository secret is missing."
+            exit 1
+          fi
+          node -e 'require("fs").writeFileSync("config.js", "const API_KEY = " + JSON.stringify(process.env.OPENWEATHER_API_KEY) + ";\\n")'
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
