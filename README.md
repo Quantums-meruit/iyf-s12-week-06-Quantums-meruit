@@ -1,94 +1,111 @@
 # Week 6: Asynchronous JavaScript & Weather Dashboard
 
-## Author
-- **Name:** Joseph Kinyanjui
-- **GitHub:** [@Quantums-meruit](https://github.com/Quantums-meruit)
-- **Date:** November 11, 2026
+## About this project
 
-## Project Description
-This repository contains my Week 6 practice for IYF Weekend Academy Season 12. It covers asynchronous JavaScript, working with the Fetch API, displaying remote data in the DOM, sending a POST request, and building a Weather Dashboard that searches current conditions by city.
+This is my Week 6 work for IYF Weekend Academy Season 12. I used the exercises to practise asynchronous JavaScript, work with APIs, handle HTTP responses, and display fetched data on a web page. The main project is a Weather Dashboard that searches for current weather by city.
 
-The project is split into three learning pages and the weather application:
-- `lesson-11.html` — callbacks, Promises, Promise chaining, parallel work and async/await.
-- `lesson-12.html` — Fetch API basics, a user directory, search/sort/city filtering and a POST form.
-- `daily-challenges.html` — the five required asynchronous JavaScript daily challenges.
-- `index.html` — the OpenWeatherMap Weather Dashboard.
+## Live Demo
 
-## Technologies Used
-- HTML5 for page structure and accessible form controls.
-- CSS3 for responsive layouts and visual styling.
-- JavaScript (ES6+) for DOM interaction, callbacks, Promises, async/await and Fetch.
-- JSONPlaceholder for practice user and post endpoints.
-- OpenWeatherMap Current Weather API for live weather data.
-- Browser localStorage for recent city searches.
-- GitHub Actions and GitHub Pages for deployment.
+[Open my Weather Dashboard](https://quantums-meruit.github.io/iyf-s12-week-06-Quantums-meruit/)
 
-## Features
-### Weather Dashboard
-- Search current weather by city name.
-- Display city and country, weather icon, temperature in Celsius and description.
-- Display feels-like temperature, humidity, wind speed and atmospheric pressure.
-- Show loading feedback and readable errors for invalid cities, API-key problems and network failures.
-- Save the five most recent successful city searches in localStorage.
-- Select a recent city to search for it again.
+## Project contents
+
+| File or folder | What it contains |
+|---|---|
+| `index.html`, `styles.css`, `app.js` | Weather Dashboard structure, styling and functionality |
+| `config.example.js` | Safe example configuration with an empty API-key value |
+| `async-practice.js`, `lesson-11.html` | Lesson 11: callbacks, Promises, Promise chaining, Promise.all, Promise.race and async/await |
+| `lesson-12.html`, `lesson-12.js`, `practice.css` | Lesson 12: Fetch API, user directory, search, sorting, filtering and POST requests |
+| `daily-challenges.html`, `daily-challenges.js` | Five interactive asynchronous JavaScript daily challenges |
+| `daily-challenges/` | Overview of the five required daily challenges |
+| `.github/workflows/deploy.yml` | GitHub Actions workflow for deploying to GitHub Pages |
+
+## Weather Dashboard features
+
+- Search for a city using the Search button or the Enter key.
+- Display the city and country, weather icon, temperature in Celsius and weather description.
+- Show feels-like temperature, humidity, wind speed and atmospheric pressure.
+- Display a loading message while the request is in progress.
+- Show a useful message when a city cannot be found, the API key is invalid, or the network request fails.
+- Keep the five most recent successful city searches in browser localStorage.
+- Select a recent search to load that city again.
+
+## Lessons and daily practice
 
 ### Lesson 11 — Asynchronous JavaScript
-- Compare synchronous and asynchronous output order.
-- Simulate a callback-based user lookup.
-- Compare nested callback flow with Promise chaining.
-- Demonstrate Promise.all and Promise.race.
-- Use async/await and try/catch for readable asynchronous code.
 
-### Lesson 12 — Working with APIs
-- Fetch one user and posts belonging to user 1.
-- Load and render a user directory with loading and error states.
-- Search users by name or email.
-- Sort users by name in ascending or descending order.
-- Filter the directory by city.
-- Submit a new post using an HTTP POST request.
+I practised synchronous and asynchronous execution, callbacks, nested callbacks, Promises, Promise chaining, `Promise.all()`, `Promise.race()`, async/await and error handling with try/catch.
 
-### Daily Challenges
-- Create a delay Promise.
-- Chain three Promise-based tasks and measure elapsed time.
-- Return a fallback user for a 404 response.
-- Convert a callback-style operation into an async/await flow.
-- Fetch three endpoints concurrently with Promise.allSettled and report each outcome.
+### Lesson 12 — Fetch API
 
-## How to Run
-1. Clone the repository:
+I practised fetching a single user and related posts, rendering a user directory, searching by name or email, sorting by name, filtering by city, and sending a POST request with JSON data.
+
+### Daily challenges
+
+1. Resolve a Promise after a delay.
+2. Chain three asynchronous tasks and measure the elapsed time.
+3. Handle a 404 response with a fallback user.
+4. Convert a callback-style operation into a Promise that can be used with async/await.
+5. Fetch three endpoints concurrently and inspect their outcomes with `Promise.allSettled()`.
+
+## Technologies used
+
+- HTML5 and CSS3
+- JavaScript (ES6+)
+- Fetch API and JSON
+- OpenWeatherMap Current Weather API
+- JSONPlaceholder practice API
+- Browser localStorage
+- Git, GitHub and GitHub Actions
+- GitHub Pages
+
+## Run the project locally
+
+1. Clone this repository:
+
    ```bash
-   git clone https://github.com/Quantums-meruit/lesson-12-exercise.git
-   cd lesson-12-exercise
+   git clone https://github.com/Quantums-meruit/iyf-s12-week-06-Quantums-meruit.git
+   cd iyf-s12-week-06-Quantums-meruit
    ```
-2. Copy `config.example.js` to `config.js`.
-3. Create a free OpenWeatherMap API key and put it in `config.js`:
+
+2. Make a local copy of the example configuration file. In PowerShell:
+
+   ```powershell
+   Copy-Item config.example.js config.js
+   ```
+
+3. Open `config.js` and replace the empty value with your own OpenWeatherMap API key:
+
    ```js
    const API_KEY = "YOUR_OPENWEATHERMAP_API_KEY";
    ```
-4. Open `index.html` with a local development server (for example, VS Code Live Server). The weather page loads `config.js` before `app.js`.
-5. Open `lesson-11.html`, `lesson-12.html` or `daily-challenges.html` to run the learning exercises. These pages do not need the weather API key.
 
-**Important:** `config.js` is listed in `.gitignore`. Do not commit your real API key. The committed `config.example.js` intentionally contains an empty placeholder.
+4. Start the folder with a local development server, such as VS Code Live Server, and open `index.html`.
 
-## Lessons Learned
-This week's exercises focus on how JavaScript can continue running while asynchronous work is pending. The examples demonstrate why callbacks are useful, how deeply nested callbacks become difficult to follow, and how Promises and async/await make asynchronous flows easier to organize.
+5. The practice pages can be opened directly: `lesson-11.html`, `lesson-12.html` and `daily-challenges.html`. They do not require the weather API key.
 
-The API exercises also demonstrate that a Fetch request must check `response.ok` because HTTP error responses do not automatically reject the Fetch Promise. The user directory practices rendering API data, while the POST form demonstrates sending JSON with request headers and a request body. JSONPlaceholder is a testing service, so its successful POST response is simulated rather than permanently saved.
+## What I learned
 
-## Challenges Faced
-- **Keeping asynchronous code readable:** separating the request, display and error-handling steps makes each function easier to understand.
-- **Handling API errors:** checking the HTTP status and using try/catch provides clearer feedback for failed requests.
-- **Keeping credentials out of Git:** the local configuration file is ignored, while deployment creates it from a GitHub Actions secret.
-- **Working with several requests:** Promise.all and Promise.allSettled demonstrate two different ways to coordinate parallel requests.
+I learned that asynchronous work allows JavaScript to continue handling other tasks while a timer or network request is pending. Callbacks helped me understand how one function can pass work to another function, while Promises gave me a clearer way to represent a result that may arrive later. Async/await made those Promise-based operations easier to read, and try/catch helped me handle failures without leaving the user with an unexplained blank page.
 
-## Live Demo
-The live URL will be added after GitHub Pages deployment succeeds.
+Working with Fetch also taught me an important detail: a request can receive an HTTP error response without the Fetch Promise rejecting. I therefore check `response.ok` before trying to use the returned data. I also practised updating the DOM from API responses, managing loading and error states, and using localStorage to keep recent searches between page visits.
 
-## API and Credential Notes
-- User and post exercises use [JSONPlaceholder](https://jsonplaceholder.typicode.com/).
-- Weather data uses the [OpenWeatherMap Current Weather API](https://openweathermap.org/current).
-- For GitHub Pages, add a repository Actions secret named `OPENWEATHER_API_KEY`. The workflow writes `config.js` during deployment.
-- A browser-based application must send its weather key to the browser to call this API. The workflow keeps the key out of Git history, but this is not equivalent to server-side secret storage. A backend would be needed to keep the key private from site visitors.
+## Challenges I worked through
 
-## Further Improvements
-The assignment lists optional enhancements such as a five-day forecast, Celsius/Fahrenheit toggle, geolocation and weather-based backgrounds. These are not included in this required-feature implementation.
+- **Understanding asynchronous order:** I used timers and output examples to observe why a zero-delay timeout still runs after the current call stack.
+- **Avoiding deeply nested callbacks:** I compared nested callbacks with Promise chains and async/await.
+- **Handling failed requests:** I added HTTP status checks and error messages for missing cities, invalid API keys and network failures.
+- **Coordinating multiple requests:** I practised the difference between Promise.all and Promise.allSettled.
+- **Managing configuration:** I separated the API key from the main application code and added config.js to .gitignore.
+
+## API key and deployment notes
+
+The weather application uses the [OpenWeatherMap Current Weather API](https://openweathermap.org/current). The practice exercises use [JSONPlaceholder](https://jsonplaceholder.typicode.com/).
+
+For deployment, the GitHub Actions workflow reads the repository secret named `OPENWEATHER_API_KEY` and creates `config.js` during the build. The real `config.js` file is ignored by Git and must not be committed.
+
+**Security note:** because this is a browser-based static website, the API key is ultimately sent to the visitor's browser and can be inspected by visitors. A GitHub Actions secret prevents the key from being stored in the repository source, but it does not make a browser-exposed key private. A backend service or proxy is needed to keep an API key private.
+
+## Possible future improvements
+
+I would like to extend the dashboard with a multi-day forecast, a Celsius/Fahrenheit switch, and more detailed weather presentation.
