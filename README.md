@@ -2,35 +2,40 @@
 
 ## About this project
 
-This is my Week 6 work for IYF Weekend Academy Season 12. I used the exercises to practise asynchronous JavaScript, work with APIs, handle HTTP responses, and display fetched data on a web page. The main project is a Weather Dashboard that searches for current weather by city.
+This repository contains my Week 6 work for IYF Weekend Academy Season 12. During this week, I practised working with asynchronous JavaScript, Promises, the Fetch API and external APIs. I also built a Weather Dashboard that lets a user search for the current weather in a city.
 
-## Live Demo
+I organised the work into the main dashboard, lesson practice and daily challenges so that each part can be explored separately.
+
+## Live demo
 
 [Open my Weather Dashboard](https://quantums-meruit.github.io/iyf-s12-week-06-Quantums-meruit/)
 
-## Project contents
+## Project structure
 
-| File or folder | What it contains |
+| File or folder | Purpose |
 |---|---|
-| `index.html`, `styles.css`, `app.js` | Weather Dashboard structure, styling and functionality |
-| `config.example.js` | Safe example configuration with an empty API-key value |
-| `async-practice.js`, `lesson-11.html` | Lesson 11: callbacks, Promises, Promise chaining, Promise.all, Promise.race and async/await |
-| `lesson-12.html`, `lesson-12.js`, `practice.css` | Lesson 12: Fetch API, user directory, search, sorting, filtering and POST requests |
-| `daily-challenges/index.html`, `daily-challenges/daily-challenges.js` | Five interactive asynchronous JavaScript daily challenges |
-| `daily-challenges/` | Overview of the five required daily challenges |
-| `.github/workflows/deploy.yml` | GitHub Actions workflow for deploying to GitHub Pages |
+| `index.html`, `styles.css`, `app.js` | Main Weather Dashboard |
+| `config.example.js` | Example configuration file with an empty API-key value |
+| `config.js` | Local API-key configuration; ignored by Git and not committed |
+| `async-practice.js`, `lesson-11.html` | Lesson 11 practice: callbacks, Promises and async/await |
+| `lesson-12.html`, `lesson-12.js`, `practice.css` | Lesson 12 Fetch API and user-directory practice |
+| `daily-challenges.html` | Root-level daily-challenges page |
+| `daily-challenges/` | Daily challenge page, JavaScript exercises and guide |
+| `.github/workflows/deploy.yml` | GitHub Actions workflow for GitHub Pages deployment |
+| `.gitignore` | Excludes local configuration and other files that should not be committed |
+| `README.md` | Project information and setup instructions |
 
 ## Weather Dashboard features
 
-- Search for a city using the Search button or the Enter key.
+- Search for a city using the Search button or by pressing Enter.
 - Display the city and country, weather icon, temperature in Celsius and weather description.
 - Show feels-like temperature, humidity, wind speed and atmospheric pressure.
-- Display a loading message while the request is in progress.
-- Show a useful message when a city cannot be found, the API key is invalid, or the network request fails.
-- Keep the five most recent successful city searches in browser localStorage.
-- Select a recent search to load that city again.
+- Show a loading state while the weather request is in progress.
+- Display useful error messages for an unknown city, an invalid API key or a network problem.
+- Save the five most recent successful searches in browser localStorage.
+- Click a recent search to look up that city again.
 
-## Lessons and daily practice
+## Lessons and daily challenges
 
 ### Lesson 11 — Asynchronous JavaScript
 
@@ -38,7 +43,7 @@ I practised synchronous and asynchronous execution, callbacks, nested callbacks,
 
 ### Lesson 12 — Fetch API
 
-I practised fetching a single user and related posts, rendering a user directory, searching by name or email, sorting by name, filtering by city, and sending a POST request with JSON data.
+I practised fetching a user and related posts, displaying a user directory, searching by name or email, sorting by name, filtering by city and sending a POST request with JSON data.
 
 ### Daily challenges
 
@@ -56,25 +61,26 @@ I practised fetching a single user and related posts, rendering a user directory
 - OpenWeatherMap Current Weather API
 - JSONPlaceholder practice API
 - Browser localStorage
-- Git, GitHub and GitHub Actions
+- Git and GitHub
+- GitHub Actions
 - GitHub Pages
 
 ## Run the project locally
 
-1. Clone this repository:
+1. Clone the repository:
 
    ```bash
    git clone https://github.com/Quantums-meruit/iyf-s12-week-06-Quantums-meruit.git
    cd iyf-s12-week-06-Quantums-meruit
    ```
 
-2. Make a local copy of the example configuration file. In PowerShell:
+2. Copy the example configuration file. In PowerShell:
 
    ```powershell
    Copy-Item config.example.js config.js
    ```
 
-3. Open `config.js` and replace the empty value with your own OpenWeatherMap API key:
+3. Open `config.js` and add your own OpenWeatherMap API key:
 
    ```js
    const API_KEY = "YOUR_OPENWEATHERMAP_API_KEY";
@@ -82,30 +88,32 @@ I practised fetching a single user and related posts, rendering a user directory
 
 4. Start the folder with a local development server, such as VS Code Live Server, and open `index.html`.
 
-5. The practice pages can be opened directly: `lesson-11.html`, `lesson-12.html` and `daily-challenges/index.html`. They do not require the weather API key.
+5. The lesson and challenge pages can also be opened separately: `lesson-11.html`, `lesson-12.html` and `daily-challenges/index.html`.
+
+**Important:** `config.js` is listed in `.gitignore`. Keep your real key in that local file and do not commit it. Commit `config.example.js` instead.
 
 ## What I learned
 
-I learned that asynchronous work allows JavaScript to continue handling other tasks while a timer or network request is pending. Callbacks helped me understand how one function can pass work to another function, while Promises gave me a clearer way to represent a result that may arrive later. Async/await made those Promise-based operations easier to read, and try/catch helped me handle failures without leaving the user with an unexplained blank page.
+I learned that asynchronous JavaScript lets the browser continue responding while work such as a timer or network request is pending. Callbacks helped me understand how one function can pass work to another function. Promises gave me a clearer way to represent an operation that may complete later, and async/await made Promise-based code easier for me to follow.
 
-Working with Fetch also taught me an important detail: a request can receive an HTTP error response without the Fetch Promise rejecting. I therefore check `response.ok` before trying to use the returned data. I also practised updating the DOM from API responses, managing loading and error states, and using localStorage to keep recent searches between page visits.
+I also learned that Fetch does not automatically reject its Promise just because the server responds with an HTTP error status. Checking `response.ok` is therefore important before using the response data. In the dashboard, I applied these ideas by fetching weather data, updating the page, showing loading and error states, and saving recent searches with localStorage.
 
 ## Challenges I worked through
 
-- **Understanding asynchronous order:** I used timers and output examples to observe why a zero-delay timeout still runs after the current call stack.
-- **Avoiding deeply nested callbacks:** I compared nested callbacks with Promise chains and async/await.
-- **Handling failed requests:** I added HTTP status checks and error messages for missing cities, invalid API keys and network failures.
-- **Coordinating multiple requests:** I practised the difference between Promise.all and Promise.allSettled.
-- **Managing configuration:** I separated the API key from the main application code and added config.js to .gitignore.
+- **Understanding execution order:** I used timer examples to see why even a zero-delay timeout runs after the current call stack.
+- **Reducing callback nesting:** I compared nested callbacks with Promise chains and async/await.
+- **Handling request errors:** I practised checking HTTP responses and showing messages for failed searches and network problems.
+- **Managing multiple requests:** I compared `Promise.all()` with `Promise.allSettled()` and considered when each is useful.
+- **Managing API configuration:** I separated the key from the application code and added `config.js` to `.gitignore`.
 
-## API key and deployment notes
+## API key and deployment
 
-The weather application uses the [OpenWeatherMap Current Weather API](https://openweathermap.org/current). The practice exercises use [JSONPlaceholder](https://jsonplaceholder.typicode.com/).
+The dashboard uses the [OpenWeatherMap Current Weather API](https://openweathermap.org/current). The practice exercises use [JSONPlaceholder](https://jsonplaceholder.typicode.com/).
 
-For deployment, the GitHub Actions workflow reads the repository secret named `OPENWEATHER_API_KEY` and creates `config.js` during the build. The real `config.js` file is ignored by Git and must not be committed.
+For GitHub Pages deployment, the workflow reads the repository Actions secret named `OPENWEATHER_API_KEY` and creates `config.js` during the workflow. The local `config.js` is ignored by Git and should never be committed.
 
-**Security note:** because this is a browser-based static website, the API key is ultimately sent to the visitor's browser and can be inspected by visitors. A GitHub Actions secret prevents the key from being stored in the repository source, but it does not make a browser-exposed key private. A backend service or proxy is needed to keep an API key private.
+**Security note:** this is a static browser-based website. The API key is delivered to the visitor's browser when the dashboard runs, so visitors can inspect it. A GitHub Actions secret keeps the key out of the repository source, but does not make a key used by frontend JavaScript private. A backend proxy is needed for genuine key secrecy.
 
 ## Possible future improvements
 
-I would like to extend the dashboard with a multi-day forecast, a Celsius/Fahrenheit switch, and more detailed weather presentation.
+I would like to add a multi-day forecast, a Celsius/Fahrenheit switch and more detailed weather information. I would also like to explore a backend proxy so that the API key does not need to be exposed to the browser.
