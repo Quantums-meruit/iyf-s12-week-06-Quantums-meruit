@@ -175,7 +175,9 @@ function loadRecent() {
     try {
 
         // Get saved searches from localStorage
-        return JSON.parse(localStorage.getItem("recent")) || [];
+        const saved = JSON.parse(localStorage.getItem("recent")) || [];
+        // Ignore malformed values so one bad storage entry cannot break the page.
+        return Array.isArray(saved) ? saved.filter(item => typeof item === "string") : [];
 
     } catch (err) {
 
@@ -199,9 +201,14 @@ function saveToHistory(city) {
     recent = recent.slice(0, MAX_RECENT);
 
     // Save the updated history
-    localStorage.setItem("recent", JSON.stringify(recent));
+    // Storage can be unavailable in private browsing or restricted contexts.
+    try {
+        localStorage.setItem("recent", JSON.stringify(recent));
+    } catch (err) {
+        showError("Weather loaded, but this browser could not save recent searches.");
+    }
 
-    // Update the history list
+    // Update the history list even if storage is unavailable.
     renderHistory();
 }
 

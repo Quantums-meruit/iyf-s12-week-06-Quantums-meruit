@@ -3,58 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Dashboard</title>
+    <meta name="description" content="A weather dashboard built with the OpenWeatherMap API and asynchronous JavaScript.">
+    <title>Weather Dashboard | Week 6</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <main class="weather-app">
+        <nav class="project-nav" aria-label="Week 6 practice pages">
+            <a href="lesson-11.html">Lesson 11: Async JavaScript</a>
+            <a href="lesson-12.html">Lesson 12: APIs</a>
+            <a href="daily-challenges.html">Daily Challenges</a>
+        </nav>
         <h1>Weather Dashboard</h1>
+        <p class="intro">Search for a city to see its current weather conditions.</p>
 
         <form id="search-form">
             <label for="city-input" class="visually-hidden">City</label>
-            <input type="text" id="city-input" placeholder="Enter city name..." required>
+            <input type="text" id="city-input" placeholder="Enter city name..." autocomplete="off" required>
             <button type="submit">Search</button>
         </form>
 
-        <div id="loading" class="hidden" role="status">Loading...</div>
-
+        <div id="loading" class="hidden" role="status" aria-live="polite">Loading weather...</div>
         <div id="error" class="hidden error" role="alert"></div>
 
-        <section id="weather-display" class="hidden" aria-live="polite">
+        <section id="weather-display" class="hidden" aria-live="polite" aria-label="Current weather">
             <div class="weather-main">
                 <h2 id="city-name"></h2>
                 <img id="weather-icon" src="" alt="">
                 <p id="temperature"></p>
                 <p id="description"></p>
             </div>
-
             <div class="weather-details">
-                <div class="detail">
-                    <span>Feels Like</span>
-                    <span id="feels-like"></span>
-                </div>
-                <div class="detail">
-                    <span>Humidity</span>
-                    <span id="humidity"></span>
-                </div>
-                <div class="detail">
-                    <span>Wind</span>
-                    <span id="wind"></span>
-                </div>
-                <div class="detail">
-                    <span>Pressure</span>
-                    <span id="pressure"></span>
-                </div>
+                <div class="detail"><span>Feels Like</span><span id="feels-like"></span></div>
+                <div class="detail"><span>Humidity</span><span id="humidity"></span></div>
+                <div class="detail"><span>Wind</span><span id="wind"></span></div>
+                <div class="detail"><span>Pressure</span><span id="pressure"></span></div>
             </div>
         </section>
 
-        <section id="recent-searches">
-            <h3>Recent Searches</h3>
+        <section id="recent-searches" aria-labelledby="recent-title">
+            <h3 id="recent-title">Recent Searches</h3>
+            <p class="history-hint">Your five most recent successful searches are saved in this browser.</p>
             <ul id="search-history"></ul>
         </section>
     </main>
-
-    <script src="config.js"></script>   <!-- defines API_KEY; git-ignored -->
+    <!-- config.js is created locally or by GitHub Actions; it must load before app.js. -->
+    <script src="config.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
